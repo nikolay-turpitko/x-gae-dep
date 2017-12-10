@@ -70,7 +70,7 @@ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengi
 
 # Useful links
 
-https://github.com/golang/dep
-https://stackoverflow.com/a/40118834/2063744.
-https://cloud.google.com/appengine/docs/flexible/go/configuration-files
-https://cloud.google.com/appengine/docs/standard/python/designing-microservice-api
+- https://github.com/golang/dep
+- https://stackoverflow.com/a/40118834/2063744
+- https://cloud.google.com/appengine/docs/flexible/go/configuration-files
+- https://cloud.google.com/appengine/docs/standard/python/designing-microservice-api
