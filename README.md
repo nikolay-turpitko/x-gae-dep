@@ -68,6 +68,12 @@ $ goapp serve ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 $ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 ```
 
+# Links to the test app
+
+- https://xgaedep.appspot.com/
+- https://a-dot-xgaedep.appspot.com/
+- https://b-dot-xgaedep.appspot.com/
+
 # Useful links
 
 - https://github.com/golang/dep
