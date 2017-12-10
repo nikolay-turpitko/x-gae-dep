@@ -8,7 +8,7 @@ https://stackoverflow.com/a/40118834/2063744.
 
 Tested in the environment as follows:
 
-```bash
+```console
 $ lsb_release -a
 No LSB modules are available.
 Distributor ID:	Ubuntu
@@ -41,31 +41,31 @@ environment variables for current project). Easy way to do it is via `source`
 shell command. Fix paths, according to your local directory layout in the
 `./appengine-env` file and use it to setup environment in a new shell.
 
-```bash
-source ./appengine-env
-# dep init/ensure/status:
-# - default service
-cd src/def
-dep ensure
-# service A
-cd ../a
-dep ensure
-# service B
-cd ../b
-dep ensure
-# dep status:
-dep status
-dep status -dot | dot -T png | display
-# Run app locally:
-cd ../..
-goapp version
-# Use next line to build service (check it has no compilation errors).
-goapp build gaedep/def gaedep/a gaedep/b
-# Serve all modules
-goapp serve ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
-# Deploy app. Note: gcloud tool is currently broken (attempts to deploy vendor dir), goapp works.
-# gcloud app deploy --project xgaedep ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
-goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
+```console
+$ source ./appengine-env
+## dep init/ensure/status:
+## - default service
+$ cd src/def
+$ dep ensure
+## - service A
+$ cd ../a
+$ dep ensure
+## - service B
+$ cd ../b
+$ dep ensure
+## dep status:
+$ dep status
+$ dep status -dot | dot -T png | display
+## Run app locally:
+$ cd ../..
+$ goapp version
+## Build service (check that it has no compilation errors):
+$ goapp build gaedep/def gaedep/a gaedep/b
+## Serve all modules:
+$ goapp serve ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
+## Deploy app. Note: gcloud tool is currently broken (attempts to deploy vendor dir), goapp works.
+## gcloud app deploy --project xgaedep ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
+$ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 ```
 
 # Useful links
