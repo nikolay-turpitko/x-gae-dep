@@ -1,0 +1,4 @@
+export GOPATH=/home/nick/Projects/x-gae-dep
+export GOROOT=/shared/installed/google-cloud-sdk/platform/google_appengine/goroot-1.8
+export APPENGINE_DEV_APPSERVER=/shared/installed/google-cloud-sdk/platform/google_appengine/dev_appserver.py
+export PATH=/shared/installed/google-cloud-sdk/platform/google_appengine:$GOROOT/bin:$PATH
