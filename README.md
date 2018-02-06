@@ -74,9 +74,17 @@ $ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appen
 # This snippet is from Mac OS X, `greadlink` is a GNU `readlink`,
 # installed with `brew install coreutils`.
 # On Linux it is just `readlink`. You may create an alias or bash function to unify them.
+
+# find full path to `gcloud` tool, it's used to calculate path to platfrom tools
 path_gcloud=$(greadlink -f $(command -v gcloud))
+
+# replace `bin/gcloud` substring with `platform/google_appengine/goroot-1.8`
 export GOROOT=${path_gcloud/%bin\/gcloud/platform\/google_appengine\/goroot-1.8}
+
+# add to `$PATH`
 export PATH=$GOROOT/bin:$PATH
+
+# use project's root dir as `$GOPATH`
 export GOPATH=$(greadlink -f .)
 ```
 
