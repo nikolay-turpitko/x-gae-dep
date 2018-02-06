@@ -68,6 +68,38 @@ $ goapp serve ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 $ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 ```
 
+**NOTE:** I used `goapp` tool in the snippet above. Google depricated it, but it still can be found within SDK. In this project's `./appengine-env` the path to the SDK platform tools is hardcoded, but if you want to make more portable script, you may try a trick I used in another my project:
+
+```console
+# This snippet is from Mac OS X, `greadlink` is a GNU `readlink`,
+# installed with `brew install coreutils`.
+# On Linux it is just `readlink`. You may create an alias or bash function to unify them.
+path_gcloud=$(greadlink -f $(command -v gcloud))
+export GOROOT=${path_gcloud/%bin\/gcloud/platform\/google_appengine\/goroot-1.8}
+export PATH=$GOROOT/bin:$PATH
+export GOPATH=$(greadlink -f .)
+```
+
+`gcloud app deploy` is currently broken, see [the issue](https://issuetracker.google.com/issues/38449183). Workaround, suggested in the discussion of the issue, is a bit ugly, but the only option worked for me:
+- move `vendor` dir(s) from the `$GOPATH/src` directory (subdirectories in case of multiple modules like in this sample) into temporary dir;
+- setup a `trap` to move them back after deployment;
+- setup `$GOPATH` for `gcloud app deploy` so that it contain temporary dir(s) with vendored dependencies;
+- execute `gcloud app deploy`, directories should be restored after script finished.
+
+Here is a snippet to illustrate the idea, but for single module (adopted from another my project):
+
+```console
+TMP_VENDOR=$(mktemp -d "${TMPDIR:-/tmp}"/deploy-gopath.XXXX)
+mv ./src/gaedep/a/vendor "$TMP_VENDOR"/src
+export GOPATH=$GOPATH:$TMP_VENDOR
+function move_vendor_back() {
+    mv "$TMP_VENDOR"/src ./src/gaedep/a/vendor
+    rm -rf "$TMP_VENDOR"
+}
+trap move_vendor_back EXIT
+gcloud app deploy ...
+```
+
 # Links to the test app
 
 - https://xgaedep.appspot.com/
@@ -80,3 +112,4 @@ $ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appen
 - https://stackoverflow.com/a/40118834/2063744
 - https://cloud.google.com/appengine/docs/flexible/go/configuration-files
 - https://cloud.google.com/appengine/docs/standard/python/designing-microservice-api
+- https://issuetracker.google.com/issues/38449183
