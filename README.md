@@ -68,7 +68,9 @@ $ goapp serve ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 $ goapp deploy -application xgaedep -version v1 ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml
 ```
 
-**NOTE:** I used `goapp` tool in the snippet above. Google depricated it, but it still can be found within SDK. In this project's `./appengine-env` the path to the SDK platform tools is hardcoded, but if you want to make more portable script, you may try a trick I used in another my project:
+**NOTE:** I used `goapp` tool in the snippet above. Google depricated it, but it still can be found within SDK.
+In this project's `./appengine-env` the path to the SDK platform tools is hardcoded, but if you want to make
+more portable script, you may try a trick I used in another my project:
 
 ```console
 # This snippet is from Mac OS X, `greadlink` is a GNU `readlink`,
@@ -88,8 +90,12 @@ export PATH=$GOROOT/bin:$PATH
 export GOPATH=$(greadlink -f .)
 ```
 
-`gcloud app deploy` is currently broken, see [the issue](https://issuetracker.google.com/issues/38449183). Workaround, suggested in the discussion of the issue, is a bit ugly, but the only option worked for me:
-- move `vendor` dir(s) from the `$GOPATH/src` directory (subdirectories in case of multiple modules like in this sample) into temporary dir;
+**NOTE:** `gcloud app deploy` is currently broken (in regard to vendoring),
+see [the issue](https://issuetracker.google.com/issues/38449183).
+Workaround, suggested in the discussion of the issue, is a bit ugly, but the only option worked for me:
+
+- move `vendor` dir(s) from the `$GOPATH/src` directory (subdirectories in case of multiple modules
+  like in this sample) into temporary dir;
 - setup a `trap` to move them back after deployment;
 - setup `$GOPATH` for `gcloud app deploy` so that it contain temporary dir(s) with vendored dependencies;
 - execute `gcloud app deploy`, directories should be restored after script finished.
