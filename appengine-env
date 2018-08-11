@@ -1,4 +1,18 @@
-export GOPATH=/home/nick/Projects/x-gae-dep
-export GOROOT=/shared/installed/google-cloud-sdk/platform/google_appengine/goroot-1.8
-export APPENGINE_DEV_APPSERVER=/shared/installed/google-cloud-sdk/platform/google_appengine/dev_appserver.py
-export PATH=/shared/installed/google-cloud-sdk/platform/google_appengine:$GOROOT/bin:$PATH
+case "$(uname -s)" in
+    "Darwin")
+        command -v greadlink >/dev/null 2>&1 || { echo >&2 "Use `brew install coreutils` to install greadlink."; exit 1; }
+        ;;
+
+    "Linux")
+        greadlink() {
+            readlink "$@"
+        }
+        export -f greadlink
+        ;;
+
+    *)
+        echo "Your OS is not supported by this script anyway"
+        exit 1
+esac
+
+export GOPATH=$(greadlink -f .):~/go-appengine

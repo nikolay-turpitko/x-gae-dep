@@ -1,0 +1,38 @@
+#!/bin/bash
+
+source ./appengine-env
+
+SRC_DIR=./src/gaedep
+
+pushd "$SRC_DIR"/a
+dep ensure -update
+dep status
+popd
+pushd "$SRC_DIR"/b
+dep ensure -update
+dep status
+popd
+pushd "$SRC_DIR"/def
+dep ensure -update
+dep status
+popd
+
+TMP_VENDOR_A=$(mktemp -d "${TMPDIR:-/tmp}"/xgaedep-gopath.a.XXXX)
+TMP_VENDOR_B=$(mktemp -d "${TMPDIR:-/tmp}"/xgaedep-gopath.b.XXXX)
+TMP_VENDOR_DEF=$(mktemp -d "${TMPDIR:-/tmp}"/xgaedep-gopath.def.XXXX)
+
+mv "$SRC_DIR"/a/vendor "$TMP_VENDOR_A"/src
+mv "$SRC_DIR"/b/vendor "$TMP_VENDOR_B"/src
+mv "$SRC_DIR"/def/vendor "$TMP_VENDOR_DEF"/src
+
+export GOPATH=$GOPATH:$TMP_VENDOR_A:$TMP_VENDOR_B:$TMP_VENDOR_DEF
+
+function move_vendor_back() {
+    mv "$TMP_VENDOR_A"/src "$SRC_DIR"/a/vendor
+    mv "$TMP_VENDOR_B"/src "$SRC_DIR"/b/vendor
+    mv "$TMP_VENDOR_DEF"/src "$SRC_DIR"/def/vendor
+    rm -rf "$TMP_VENDOR_A" "$TMP_VENDOR_B" "$TMP_VENDOR_DEF"
+}
+trap move_vendor_back EXIT
+
+gcloud app deploy --project xgaedep ./appengine/def/app.yaml ./appengine/a/a.yaml ./appengine/b/b.yaml 
