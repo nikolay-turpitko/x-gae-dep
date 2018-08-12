@@ -53,6 +53,7 @@ worked for me:
 - directories should be restored after script finished.
 
 See `./deploy` and `./appengine-env` scripts.
+
 For scripts to work on Mac OS X you may need to
 install `greadlink` with `brew install coreutils`.
 
