@@ -15,7 +15,7 @@ Distributor ID:	Debian
 Description:	Debian GNU/Linux 9.5 (stretch)
 Release:	9.5
 Codename:	stretch
-nick@n76vj:~$ go version
+$ go version
 go version go1.10.3 linux/amd64
 $ dep version
 dep:
