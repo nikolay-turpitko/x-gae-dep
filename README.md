@@ -6,7 +6,7 @@ vendoring) in Google App Engine project.
 It is created to illustrate approach described at
 https://stackoverflow.com/a/40118834/2063744.
 
-Tested in the environment as follows:
+Tested in the environments as follows:
 
 ```console
 $ lsb_release -a
@@ -34,6 +34,31 @@ alpha 2018.08.03
 app-engine-go 
 app-engine-python 1.9.73
 beta 2018.08.03
+bq 2.0.34
+core 2018.08.03
+gsutil 4.33
+```
+
+```console
+$ uname -a
+Darwin nick-mac.local 17.7.0 Darwin Kernel Version 17.7.0: Thu Jun 21 22:53:14 PDT 2018; root:xnu-4570.71.2~1/RELEASE_X86_64 x86_64
+$ go version
+go version go1.10.3 darwin/amd64
+$ dep version
+dep:
+ version     : v0.5.0
+ build date  : 2018-07-26
+ git hash    : 224a564
+ go version  : go1.10.3
+ go compiler : gc
+ platform    : darwin/amd64
+ features    : ImportDuringSolve=false
+$ goapp version
+-bash: goapp: command not found
+$ gcloud version
+Google Cloud SDK 211.0.0
+app-engine-go
+app-engine-python 1.9.73
 bq 2.0.34
 core 2018.08.03
 gsutil 4.33
