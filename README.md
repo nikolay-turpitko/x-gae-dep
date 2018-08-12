@@ -49,10 +49,11 @@ worked for me:
 - setup a `trap` to move them back after deployment;
 - setup `$GOPATH` for `gcloud app deploy` so that it contain temporary dir(s)
   with vendored dependencies;
-- execute `gcloud app deploy`, directories should be restored after script
-  finished.
+- execute `gcloud app deploy`;
+- directories should be restored after script finished.
 
-See `./deploy` and `./appengine-env` scripts. For Mac OS X you may need to
+See `./deploy` and `./appengine-env` scripts.
+For scripts to work on Mac OS X you may need to
 install `greadlink` with `brew install coreutils`.
 
 # Links to the test app
